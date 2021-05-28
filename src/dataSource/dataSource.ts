@@ -2,6 +2,7 @@ import { RESTDataSource } from 'apollo-datasource-rest'
 import camelCaseKeys from 'camelcase-keys'
 
 const API_URL = 'https://swapi.dev/api'
+const PEOPLE_PER_PAGE = 10;
 
 export class PeopleAPI extends RESTDataSource {
   constructor() {
@@ -12,7 +13,7 @@ export class PeopleAPI extends RESTDataSource {
   async people(page: number) {
     const data = await this.get('people',{ page});
 
-    return camelCaseKeys(data.results, { deep: true });
+    return camelCaseKeys(this.paginateResults(data), { deep: true });
   }
   async personByName(name: string) {
     const data = await this.get('people',{search: name});
@@ -23,6 +24,15 @@ export class PeopleAPI extends RESTDataSource {
     }
 
     return camelCaseKeys(person, { deep: true });
+  }
+
+  paginateResults(data:any) {
+    return {
+      numberOfPages: Math.ceil(data.count/PEOPLE_PER_PAGE),
+      hasNextPage: data.next ? true : false,
+      hasPreviousPage: data.previous ? true : false,
+      people: data.results,
+    }
   }
 }
 

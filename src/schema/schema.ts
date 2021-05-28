@@ -18,14 +18,15 @@ const typeDefs = gql`
     homeworld: String
   }
 
-  type PersonConnection {
-  cursor: String!
-  hasMore: Boolean!
-  people: [Person]!
-}
+  type PaginatedResultResponese {
+    numberOfPages: Int
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    people: [Person!]
+  }
 
   type Query {
-    people(page: Int): [PersonResponse]
+    people(page: Int): PaginatedResultResponese
     personByName(name: String!): PersonResponse
   }
 `
