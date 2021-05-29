@@ -12,25 +12,43 @@ export class PeopleAPI extends RESTDataSource {
 
   async people(page: number) {
     const data = await this.get('people',{ page});
+    let transformedData ;
+    if(data && data.results){
+      transformedData = await Promise.all(data.results.map( async person => {
+      const pathArray = person.homeworld.split('/');
 
+      person.homeworld =  await this.getPersonHomeWorld(parseInt(pathArray[5]));
+      return person;
+    }));
+    }
+    data.results = transformedData;
     return camelCaseKeys(this.paginateResults(data), { deep: true });
   }
   async personByName(name: string) {
     const data = await this.get('people',{search: name});
-    let person = {};
+    let person;
 
     if(data && data.count  === 1){
       person = data.results[0];
+      const pathArray = person.homeworld.split('/');
+
+      person.homeworld =  await this.getPersonHomeWorld(parseInt(pathArray[5]));
     }
 
     return camelCaseKeys(person, { deep: true });
   }
 
-  paginateResults(data:any) {
+  async getPersonHomeWorld(id:number) {
+    const homeworldData = await this.get(`planets/${id}`);
+
+    return homeworldData;
+  }
+
+  paginateResults(data) {
     return {
       numberOfPages: Math.ceil(data.count/PEOPLE_PER_PAGE),
-      hasNextPage: data.next ? true : false,
-      hasPreviousPage: data.previous ? true : false,
+      hasNextPage: (typeof data.next ==='string')? true : false,
+      hasPreviousPage: (typeof data.previous ==='string') ? true : false,
       people: data.results,
     }
   }

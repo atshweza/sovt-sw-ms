@@ -7,7 +7,15 @@ const typeDefs = gql`
     height: String
     mass: String
     gender: String
-    homeworld: String
+    homeworld: HomeWorld
+  }
+
+   type HomeWorld {
+    name: String
+    rotationPeriod: String
+    terrain: String
+    climate: String
+    population: String
   }
 
   type PersonResponse {
@@ -15,7 +23,7 @@ const typeDefs = gql`
     height: String
     mass: String
     gender: String
-    homeworld: String
+    homeworld: HomeWorld
   }
 
   type PaginatedResultResponese {
