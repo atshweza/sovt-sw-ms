@@ -1,8 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest'
 import camelCaseKeys from 'camelcase-keys'
-
-const API_URL = 'https://swapi.dev/api'
-const PEOPLE_PER_PAGE = 10;
+import { API_URL, PEOPLE_PER_PAGE } from "../utils/constants";
 
 export class PeopleAPI extends RESTDataSource {
   constructor() {
@@ -12,7 +10,9 @@ export class PeopleAPI extends RESTDataSource {
 
   async people(page: number) {
     const data = await this.get('people',{ page});
+
     let transformedData ;
+
     if(data && data.results){
       transformedData = await Promise.all(data.results.map( async person => {
       const pathArray = person.homeworld.split('/');
@@ -26,6 +26,7 @@ export class PeopleAPI extends RESTDataSource {
   }
   async personByName(name: string) {
     const data = await this.get('people',{search: name});
+
     let person;
 
     if(data && data.count  === 1){
