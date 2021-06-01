@@ -1,14 +1,19 @@
-<h1 align="center">
-  Sovtech Start Wars MS
-</h1>
+# SovTech | Technical Assessment
 
-<h4 align="center">Fullstack Developer Test- Creating a Star Wars API with Apollo Server</h4>
+This SovTech Technical Assessment for backend was done using 💙 Node and TypeScript.
 
-<br />
-<br />
+## What tools did I use?
 
-## Summary
+The React Essentials Boilerplate features a few of the most common and necessary libs to create a modern and expandable React App:
 
-GraphQL is a powerful opensource query language developed by Facebook. It solves the problem of building good, intuitive, and well-designed APIs.
+### [GraphQL](https://graphql.org/)
 
-Sovtech Start Wars MS is built using GraphQL Star Wars app with Node and Typescript. Sovtech Start Wars MS GraphQL server is configured using the Apollo Framework.
+    A query language for your API
+
+### [Typescript](https://www.typescriptlang.org/)
+
+    Use Typescript to streamline, build, validate and better document your code.
+
+## Motivation
+
+Fullstack Developer Test- Creating a Star Wars API with Apollo Server
